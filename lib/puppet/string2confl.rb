@@ -1,7 +1,6 @@
-require "puppet/string2confl/version"
+require 'puppet/string2confl/version'
 require 'erb'
 require 'json'
-
 
 module Puppet
   module String2confl
