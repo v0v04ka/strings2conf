@@ -42,13 +42,13 @@
 <% end -%>
 <% if @data.key?('puppet_functions') -%>
   <h1>Puppet functions</h1>
-  <% for puppet_function in @data['puppet_functions'] -%>
+  <% @data['puppet_functions'].each do |puppet_function| -%>
     <h2><%= puppet_function['name'] %></h2>
     <h3>Description</h3>
     <p><%= puppet_function['docstring']['text'] %></p>
     <% for tag in puppet_function['docstring']['tags'] -%>
       <% if tag['tag_name'] == 'return' -%>
-        <strong>Return:</strong> [ <%= tag['types'].join(',') %> ]
+        <strong>Return:</strong> [ <%= tag['types'].join(',') %> ] <%= tag['text'] %><br/>
       <% else -%>
         <strong><%= tag['tag_name'] %>:</strong> <%= tag['text'] %><br/>
       <% end -%>
