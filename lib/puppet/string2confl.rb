@@ -13,7 +13,7 @@ module Puppet
     my_path = (File.dirname(File.expand_path(__FILE__)))
     DEFAULT_ERB = File.read(my_path + '/string2confl/reference.html.erb')
     def self.render_erb(json, erb=String2confl::DEFAULT_ERB)
-      erb = ERB.new(erb)
+      erb = ERB.new(erb,0,'-')
       print erb.def_class(Puppet::String2confl::ErbPassVal_, 'render()').new(json).render()
 
     end
