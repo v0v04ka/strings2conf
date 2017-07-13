@@ -9,6 +9,7 @@
 <ac:parameter ac:name="outline">false</ac:parameter>
 <ac:parameter ac:name="include"></ac:parameter>
 </ac:structured-macro>
+<%- if @data.key?('puppet_classes') -%>
 <h1>Puppet classes</h1>
 <% for puppet_class in @data['puppet_classes'] -%>
 <h2><%= puppet_class['name'] %></h2>
@@ -38,6 +39,8 @@
 <% end -%>
 <% end -%>
 <% end -%>
+<% end -%>
+<% if @data.key?('puppet_functions') -%>
 <h1>Puppet functions</h1>
 <% for puppet_function in @data['puppet_functions'] -%>
 <h2><%= puppet_function['name'] %></h2>
@@ -48,6 +51,7 @@
 <strong>Return:</strong> [ <%= tag['types'].join(',') %> ]
 <% else -%>
 <strong><%= tag['tag_name'] %>:</strong> <%= tag['text'] %><br/>
+<% end -%>
 <% end -%>
 <% end -%>
 <% end -%>

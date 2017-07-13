@@ -14,7 +14,7 @@ module Puppet
 
     def self.render_erb(json, erb=String2confl::DEFAULT_ERB)
       erb = ERB.new(erb, 0, '-')
-      print erb.def_class(Puppet::String2confl::ErbPassVal_, 'render()').new(json).render()
+      erb.def_class(Puppet::String2confl::ErbPassVal_, 'render()').new(json).render()
     end
   end
 end
