@@ -45,9 +45,7 @@
 <p><%= puppet_function['docstring']['text'] %></p>
 <% for tag in puppet_function['docstring']['tags'] -%>
 <% if tag['tag_name'] == 'return' -%>
-<strong>Return:</strong> [
-<% for type in tag['types'] -%><%= type %>,
-<% end -%>] <%= tag['text'] %><br/>
+<strong>Return:</strong> [ <%= tag['types'].join(',') %> ]
 <% else -%>
 <strong><%= tag['tag_name'] %>:</strong> <%= tag['text'] %><br/>
 <% end -%>
