@@ -22,20 +22,22 @@
         <p><%= tag['name'] %> <%= tag['text'] %> </p>
       <%- end -%>
     <%- end -%>
-    <h3>Params</h3>
-    <ul>
-      <%- for tag in puppet_class['docstring']['tags'] -%>
-        <%- if tag['tag_name'] == 'param' -%>
-          <li><strong><%= tag['name'] %></strong> [ <%= tag['types'].join(',') %> ] <%= tag['text'] %></li>
+    <%- params = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
+    <%- if params.any? -%>
+      <h3>Params</h3>
+      <ul>
+        <%- for param in params -%>
+          <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
         <%- end -%>
-      <%- end -%>
-    </ul>
-    <h3>Examples</h3>
-    <%- for tag in puppet_class['docstring']['tags'] -%>
-      <%- if tag['tag_name'] == 'example' -%>
-        <p><%= tag['name'] %></p>
+      </ul>
+    <%- end -%>
+    <%- examples = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'example' } -%>
+    <%- if examples.any? -%>
+      <h3>Examples</h3>
+      <%- for example in examples -%>
+        <p><%= example['name'] %></p>
         <ac:structured-macro ac:name="code" ac:schema-version="1">
-          <ac:plain-text-body><![CDATA[<%= tag['text'] %>]]></ac:plain-text-body>
+          <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
         </ac:structured-macro>
       <%- end -%>
     <%- end -%>
