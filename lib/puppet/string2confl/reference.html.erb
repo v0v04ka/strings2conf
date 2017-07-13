@@ -1,0 +1,55 @@
+<ac:structured-macro ac:name="toc">
+  <ac:parameter ac:name="printable">true</ac:parameter>
+  <ac:parameter ac:name="style">disc</ac:parameter>
+  <ac:parameter ac:name="maxLevel">2</ac:parameter>
+  <ac:parameter ac:name="minLevel">1</ac:parameter>
+  <ac:parameter ac:name="class">rm-contents</ac:parameter>
+  <ac:parameter ac:name="exclude"></ac:parameter>
+  <ac:parameter ac:name="type">list</ac:parameter>
+  <ac:parameter ac:name="outline">false</ac:parameter>
+  <ac:parameter ac:name="include"></ac:parameter>
+</ac:structured-macro>
+<h1>Puppet classes</h1>
+<% for puppet_class in @data['puppet_classes'] %>
+    <h2><%= puppet_class['name'] %></h2>
+    <h3>Description</h3>
+    <p><%= puppet_class['docstring']['text'] %></p>
+    <% for tag in puppet_class['docstring']['tags'] %>
+        <% if tag['tag_name'] != 'param' and tag['tag_name'] != 'example' %>
+            <h3><%= tag['tag_name'] %></h3>
+            <p><%= tag['name'] %> <%= tag['text'] %> </p>
+        <% end %>
+    <% end %>
+    <h3>Params</h3>
+    <ul>
+      <% for tag in puppet_class['docstring']['tags'] %>
+          <% if tag['tag_name'] == 'param' %>
+              <li><strong><%= tag['name'] %></strong> <%= tag['text'] %></li>
+          <% end %>
+      <% end %>
+    </ul>
+    <h3>Examples</h3>
+    <% for tag in puppet_class['docstring']['tags'] %>
+        <% if tag['tag_name'] == 'example' %>
+            <p><%= tag['name'] %></p>
+            <ac:structured-macro ac:name="code" ac:schema-version="1">
+              <ac:plain-text-body><![CDATA[<%= tag['text'] %>]]></ac:plain-text-body>
+            </ac:structured-macro>
+        <% end %>
+    <% end %>
+<% end %>
+<h1>Puppet functions</h1>
+<% for puppet_function in @data['puppet_functions'] %>
+    <h2><%= puppet_function['name'] %></h2>
+    <h3>Description</h3>
+    <p><%= puppet_function['docstring']['text'] %></p>
+    <% for tag in puppet_function['docstring']['tags'] %>
+        <% if tag['tag_name'] == 'return' %>
+            <strong>Return:</strong> [
+            <% for type in tag['types'] %><%= type %>,
+            <% end %>] <%= tag['text'] %><br/>
+        <% else %>
+            <strong><%= tag['tag_name'] %>:</strong> <%= tag['text'] %><br/>
+        <% end %>
+    <% end %>
+<% end %>

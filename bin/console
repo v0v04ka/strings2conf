@@ -10,5 +10,7 @@ require "puppet/string2confl"
 # require "pry"
 # Pry.start
 
-require "irb"
-IRB.start(__FILE__)
+#require "irb"
+#IRB.start(__FILE__)
+# Puppet::String2confl.render_erb('../system_base.json')
+Puppet::String2confl.render_erb(File.read('../system_base.json'))
