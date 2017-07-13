@@ -13,4 +13,4 @@ require "puppet/string2confl"
 #require "irb"
 #IRB.start(__FILE__)
 # Puppet::String2confl.render_erb('../system_base.json')
-puts Puppet::String2confl.render_erb(File.read('../system_base.json'))
+puts Puppet::String2confl.render_erb(File.read('../test.json'))

@@ -10,7 +10,11 @@ RSpec.describe Puppet::String2confl do
   it 'does something useful' do
     expect(Puppet::String2confl.render_erb(<<~JSON
       {
-        "puppet_classes": []
+        "puppet_classes": [],
+        "defined_types": [],
+        "resource_types": [],
+        "providers": [],
+        "puppet_functions": []
       }
     JSON
     )).to match(/ac:structured-macro/)

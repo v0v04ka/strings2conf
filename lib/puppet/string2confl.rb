@@ -1,6 +1,7 @@
 require 'puppet/string2confl/version'
 require 'erb'
 require 'json'
+include ERB::Util
 
 module Puppet
   module String2confl
