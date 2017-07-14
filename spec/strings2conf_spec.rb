@@ -1,14 +1,12 @@
-# frozen_string_literal: true
-
 require 'spec_helper'
 
-RSpec.describe Puppet::String2confl do
+RSpec.describe Strings2conf do
   it 'has a version number' do
-    expect(Puppet::String2confl::VERSION).not_to be nil
+    expect(Strings2conf::VERSION).not_to be nil
   end
 
   it 'does something useful' do
-    expect(Puppet::String2confl.render_erb(<<~JSON
+    expect(Strings2conf.convert(<<~JSON
       {
         "puppet_classes": [],
         "defined_types": [],

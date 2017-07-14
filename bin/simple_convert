@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'strings2conf'
+
+puts Strings2conf.convert(File.read('../test.json'))

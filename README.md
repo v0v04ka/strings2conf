@@ -1,13 +1,15 @@
-[![Build Status](https://travis-ci.org/v0v04ka/puppet-string2confl.svg?branch=master)](https://travis-ci.org/v0v04ka/puppet-string2confl)
-# Puppet::String2confl
-This is lib for converting json provided by `puppet strings generate` to Confluence Storage XHTML format.
+# Strings2conf
+
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/strings2conf`. To experiment with that code, run `bin/console` for an interactive prompt.
+
+TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'puppet-string2confl'
+gem 'strings2conf'
 ```
 
 And then execute:
@@ -16,14 +18,11 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install puppet-string2confl
+    $ gem install strings2conf
 
 ## Usage
 
-```ruby
-require "puppet/string2confl"
-Puppet::String2confl.render_erb(File.read('../test.json'))
-```
+TODO: Write usage instructions here
 
 ## Development
 
@@ -33,7 +32,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/v0v04ka/puppet-string2confl. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/strings2conf. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -41,4 +40,4 @@ The gem is available as open source under the terms of the [MIT License](http://
 
 ## Code of Conduct
 
-Everyone interacting in the Puppet::String2confl project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/puppet-string2confl/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Strings2conf project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/strings2conf/blob/master/CODE_OF_CONDUCT.md).

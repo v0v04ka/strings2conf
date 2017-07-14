@@ -1,2 +1,8 @@
 AllCops:
   TargetRubyVersion: 2.3
+
+Style/ClosingParenthesisIndentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
