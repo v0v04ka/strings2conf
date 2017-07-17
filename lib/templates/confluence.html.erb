@@ -49,6 +49,16 @@
         </ac:structured-macro>
       <%- end -%>
     <%- end -%>
+        <ac:structured-macro ac:name="expand" ac:schema-version="1">
+          <ac:parameter ac:name="title">Source</ac:parameter>
+          <ac:rich-text-body>
+            <ac:structured-macro ac:name="code" ac:schema-version="1">
+              <ac:parameter ac:name="language">ruby</ac:parameter>
+              <ac:parameter ac:name="title"><%= puppet_class['file'] %></ac:parameter>
+              <ac:plain-text-body><![CDATA[<%= puppet_class['source'] %>]]></ac:plain-text-body>
+            </ac:structured-macro>
+          </ac:rich-text-body>
+        </ac:structured-macro>
   <%- end -%>
 <%- end -%>
 <%# Parse defined types -%>
@@ -91,6 +101,16 @@
         </ac:structured-macro>
       <%- end -%>
     <%- end -%>
+        <ac:structured-macro ac:name="expand" ac:schema-version="1">
+          <ac:parameter ac:name="title">Source</ac:parameter>
+          <ac:rich-text-body>
+            <ac:structured-macro ac:name="code" ac:schema-version="1">
+              <ac:parameter ac:name="language">ruby</ac:parameter>
+              <ac:parameter ac:name="title"><%= defined_type['file'] %></ac:parameter>
+              <ac:plain-text-body><![CDATA[<%= defined_type['source'] %>]]></ac:plain-text-body>
+            </ac:structured-macro>
+          </ac:rich-text-body>
+        </ac:structured-macro>
   <%- end -%>
 <%- end -%>
 <%# Parse functions -%>
@@ -107,5 +127,15 @@
         <strong><%= tag['tag_name'] %>:</strong> <%= tag['text'] %><br/>
       <%- end -%>
     <%- end -%>
+        <ac:structured-macro ac:name="expand" ac:schema-version="1">
+          <ac:parameter ac:name="title">Source</ac:parameter>
+          <ac:rich-text-body>
+            <ac:structured-macro ac:name="code" ac:schema-version="1">
+              <ac:parameter ac:name="language">ruby</ac:parameter>
+              <ac:parameter ac:name="title"><%= puppet_function['file'] %></ac:parameter>
+              <ac:plain-text-body><![CDATA[<%= puppet_function['source'] %>]]></ac:plain-text-body>
+            </ac:structured-macro>
+          </ac:rich-text-body>
+        </ac:structured-macro>
   <%- end -%>
 <%- end -%>
