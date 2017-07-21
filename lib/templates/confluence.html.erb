@@ -19,52 +19,52 @@
   <%- @data['puppet_classes'].each do |puppet_class| -%>
     <h2><%= puppet_class['name'] %></h2>
     <%- if puppet_class['docstring']['tags'] -%>
-    <%- api = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
-    <%- if api.any? and api[0]['text'].eql? 'private' -%>
-      <ac:structured-macro ac:macro-id="a89793b9-e782-4567-95e6-58a6b34d9b9e" ac:name="note" ac:schema-version="1">
+      <%- api = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
+      <%- if api.any? and api[0]['text'].eql? 'private' -%>
+        <ac:structured-macro ac:macro-id="a89793b9-e782-4567-95e6-58a6b34d9b9e" ac:name="note" ac:schema-version="1">
+          <ac:rich-text-body>
+            <p>This class is private. It's intended solely for internal module usage.</p>
+          </ac:rich-text-body>
+        </ac:structured-macro>
+      <%- end -%>
+      <h3>Description</h3>
+      <p><%= puppet_class['docstring']['text'] %></p>
+      <%- for tag in puppet_class['docstring']['tags'] -%>
+        <%- unless %w(param example api).include? tag['tag_name'] -%>
+          <h3><%= tag['tag_name'].capitalize %></h3>
+          <p><%= tag['name'] %> <%= h tag['text'] %> </p>
+        <%- end -%>
+      <%- end -%>
+      <%- params = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
+      <%- if params.any? -%>
+        <h3>Parameters</h3>
+        <ul>
+          <%- for param in params -%>
+            <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
+          <%- end -%>
+        </ul>
+      <%- end -%>
+      <%- examples = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'example' } -%>
+      <%- if examples.any? -%>
+        <h3>Examples</h3>
+        <%- for example in examples -%>
+          <p><%= example['name'] %></p>
+          <ac:structured-macro ac:name="code" ac:schema-version="1">
+            <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
+          </ac:structured-macro>
+        <%- end -%>
+      <%- end -%>
+      <ac:structured-macro ac:name="expand" ac:schema-version="1">
+        <ac:parameter ac:name="title">Source</ac:parameter>
         <ac:rich-text-body>
-          <p>This class is private. It's intended solely for internal module usage.</p>
+          <ac:structured-macro ac:name="code" ac:schema-version="1">
+            <ac:parameter ac:name="language">ruby</ac:parameter>
+            <ac:parameter ac:name="title"><%= puppet_class['file'] %></ac:parameter>
+            <ac:plain-text-body><![CDATA[<%= puppet_class['source'] %>]]></ac:plain-text-body>
+          </ac:structured-macro>
         </ac:rich-text-body>
       </ac:structured-macro>
     <%- end -%>
-    <h3>Description</h3>
-    <p><%= puppet_class['docstring']['text'] %></p>
-    <%- for tag in puppet_class['docstring']['tags'] -%>
-      <%- unless %w(param example api).include? tag['tag_name'] -%>
-        <h3><%= tag['tag_name'].capitalize %></h3>
-        <p><%= tag['name'] %> <%= h tag['text'] %> </p>
-      <%- end -%>
-    <%- end -%>
-    <%- params = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
-    <%- if params.any? -%>
-      <h3>Parameters</h3>
-      <ul>
-        <%- for param in params -%>
-          <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
-        <%- end -%>
-      </ul>
-    <%- end -%>
-    <%- examples = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'example' } -%>
-    <%- if examples.any? -%>
-      <h3>Examples</h3>
-      <%- for example in examples -%>
-        <p><%= example['name'] %></p>
-        <ac:structured-macro ac:name="code" ac:schema-version="1">
-          <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
-        </ac:structured-macro>
-      <%- end -%>
-    <%- end -%>
-    <ac:structured-macro ac:name="expand" ac:schema-version="1">
-      <ac:parameter ac:name="title">Source</ac:parameter>
-      <ac:rich-text-body>
-        <ac:structured-macro ac:name="code" ac:schema-version="1">
-          <ac:parameter ac:name="language">ruby</ac:parameter>
-          <ac:parameter ac:name="title"><%= puppet_class['file'] %></ac:parameter>
-          <ac:plain-text-body><![CDATA[<%= puppet_class['source'] %>]]></ac:plain-text-body>
-        </ac:structured-macro>
-      </ac:rich-text-body>
-    </ac:structured-macro>
-  <%- end -%>
   <%- end -%>
 <%- end -%>
 <%#
@@ -77,52 +77,52 @@
   <%- @data['defined_types'].each do |defined_type| -%>
     <h2><%= defined_type['name'] %></h2>
     <%- if defined_type['docstring']['tags'] -%>
-    <%- api = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
-    <%- if api.any? and api[0]['text'].eql? 'private' -%>
-      <ac:structured-macro ac:macro-id="a89793b9-e782-4567-95e6-58a6b34d9b9e" ac:name="note" ac:schema-version="1">
+      <%- api = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
+      <%- if api.any? and api[0]['text'].eql? 'private' -%>
+        <ac:structured-macro ac:macro-id="a89793b9-e782-4567-95e6-58a6b34d9b9e" ac:name="note" ac:schema-version="1">
+          <ac:rich-text-body>
+            <p>This defined type is private. It's intended solely for internal module usage.</p>
+          </ac:rich-text-body>
+        </ac:structured-macro>
+      <%- end -%>
+      <h3>Description</h3>
+      <p><%= defined_type['docstring']['text'] %></p>
+      <%- for tag in defined_type['docstring']['tags'] -%>
+        <%- unless %w(param example api).include? tag['tag_name'] -%>
+          <h3><%= tag['tag_name'].capitalize %></h3>
+          <p><%= tag['name'] %> <%= h tag['text'] %> </p>
+        <%- end -%>
+      <%- end -%>
+      <%- params = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
+      <%- if params.any? -%>
+        <h3>Parameters</h3>
+        <ul>
+          <%- for param in params -%>
+            <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
+          <%- end -%>
+        </ul>
+      <%- end -%>
+      <%- examples = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'example' } -%>
+      <%- if examples.any? -%>
+        <h3>Examples</h3>
+        <%- for example in examples -%>
+          <p><%= example['name'] %></p>
+          <ac:structured-macro ac:name="code" ac:schema-version="1">
+            <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
+          </ac:structured-macro>
+        <%- end -%>
+      <%- end -%>
+      <ac:structured-macro ac:name="expand" ac:schema-version="1">
+        <ac:parameter ac:name="title">Source</ac:parameter>
         <ac:rich-text-body>
-          <p>This defined type is private. It's intended solely for internal module usage.</p>
+          <ac:structured-macro ac:name="code" ac:schema-version="1">
+            <ac:parameter ac:name="language">ruby</ac:parameter>
+            <ac:parameter ac:name="title"><%= defined_type['file'] %></ac:parameter>
+            <ac:plain-text-body><![CDATA[<%= defined_type['source'] %>]]></ac:plain-text-body>
+          </ac:structured-macro>
         </ac:rich-text-body>
       </ac:structured-macro>
     <%- end -%>
-    <h3>Description</h3>
-    <p><%= defined_type['docstring']['text'] %></p>
-    <%- for tag in defined_type['docstring']['tags'] -%>
-      <%- unless %w(param example api).include? tag['tag_name'] -%>
-        <h3><%= tag['tag_name'].capitalize %></h3>
-        <p><%= tag['name'] %> <%= h tag['text'] %> </p>
-      <%- end -%>
-    <%- end -%>
-    <%- params = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
-    <%- if params.any? -%>
-      <h3>Parameters</h3>
-      <ul>
-        <%- for param in params -%>
-          <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
-        <%- end -%>
-      </ul>
-    <%- end -%>
-    <%- examples = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'example' } -%>
-    <%- if examples.any? -%>
-      <h3>Examples</h3>
-      <%- for example in examples -%>
-        <p><%= example['name'] %></p>
-        <ac:structured-macro ac:name="code" ac:schema-version="1">
-          <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
-        </ac:structured-macro>
-      <%- end -%>
-    <%- end -%>
-    <ac:structured-macro ac:name="expand" ac:schema-version="1">
-      <ac:parameter ac:name="title">Source</ac:parameter>
-      <ac:rich-text-body>
-        <ac:structured-macro ac:name="code" ac:schema-version="1">
-          <ac:parameter ac:name="language">ruby</ac:parameter>
-          <ac:parameter ac:name="title"><%= defined_type['file'] %></ac:parameter>
-          <ac:plain-text-body><![CDATA[<%= defined_type['source'] %>]]></ac:plain-text-body>
-        </ac:structured-macro>
-      </ac:rich-text-body>
-    </ac:structured-macro>
-  <%- end -%>
   <%- end -%>
 <%- end -%>
 <%#
@@ -143,7 +143,7 @@
     <%- if overloads.any? -%>
       <%- overloads.each_with_index do |overload, index| -%>
         <h3>Signature #<%= index + 1 %> </h3>
-         <ac:structured-macro ac:name="code" ac:schema-version="1">
+        <ac:structured-macro ac:name="code" ac:schema-version="1">
           <ac:parameter ac:name="language">ruby</ac:parameter>
           <ac:plain-text-body><![CDATA[<%= overload['signature'] %>]]></ac:plain-text-body>
         </ac:structured-macro>
