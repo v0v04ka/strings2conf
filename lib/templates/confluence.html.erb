@@ -9,7 +9,11 @@
   <ac:parameter ac:name="outline">false</ac:parameter>
   <ac:parameter ac:name="include"></ac:parameter>
 </ac:structured-macro>
-<%# Parse classes -%>
+<%#
+
+  Parse classes
+
+-%>
 <%- if @data['puppet_classes'].any? -%>
   <h1>Puppet classes</h1>
   <%- @data['puppet_classes'].each do |puppet_class| -%>
@@ -25,7 +29,7 @@
     <h3>Description</h3>
     <p><%= puppet_class['docstring']['text'] %></p>
     <%- for tag in puppet_class['docstring']['tags'] -%>
-      <%- unless ['param', 'example', 'api'].include? tag['tag_name'] -%>
+      <%- unless %w(param example api).include? tag['tag_name'] -%>
         <h3><%= tag['tag_name'].capitalize %></h3>
         <p><%= tag['name'] %> <%= h tag['text'] %> </p>
       <%- end -%>
@@ -49,19 +53,23 @@
         </ac:structured-macro>
       <%- end -%>
     <%- end -%>
-        <ac:structured-macro ac:name="expand" ac:schema-version="1">
-          <ac:parameter ac:name="title">Source</ac:parameter>
-          <ac:rich-text-body>
-            <ac:structured-macro ac:name="code" ac:schema-version="1">
-              <ac:parameter ac:name="language">ruby</ac:parameter>
-              <ac:parameter ac:name="title"><%= puppet_class['file'] %></ac:parameter>
-              <ac:plain-text-body><![CDATA[<%= puppet_class['source'] %>]]></ac:plain-text-body>
-            </ac:structured-macro>
-          </ac:rich-text-body>
+    <ac:structured-macro ac:name="expand" ac:schema-version="1">
+      <ac:parameter ac:name="title">Source</ac:parameter>
+      <ac:rich-text-body>
+        <ac:structured-macro ac:name="code" ac:schema-version="1">
+          <ac:parameter ac:name="language">ruby</ac:parameter>
+          <ac:parameter ac:name="title"><%= puppet_class['file'] %></ac:parameter>
+          <ac:plain-text-body><![CDATA[<%= puppet_class['source'] %>]]></ac:plain-text-body>
         </ac:structured-macro>
+      </ac:rich-text-body>
+    </ac:structured-macro>
   <%- end -%>
 <%- end -%>
-<%# Parse defined types -%>
+<%#
+
+  Parse defined types
+
+-%>
 <%- if @data['defined_types'].any? -%>
   <h1>Defined Types</h1>
   <%- @data['defined_types'].each do |defined_type| -%>
@@ -77,7 +85,7 @@
     <h3>Description</h3>
     <p><%= defined_type['docstring']['text'] %></p>
     <%- for tag in defined_type['docstring']['tags'] -%>
-      <%- unless ['param', 'example', 'api'].include? tag['tag_name'] -%>
+      <%- unless %w(param example api).include? tag['tag_name'] -%>
         <h3><%= tag['tag_name'].capitalize %></h3>
         <p><%= tag['name'] %> <%= h tag['text'] %> </p>
       <%- end -%>
@@ -101,41 +109,59 @@
         </ac:structured-macro>
       <%- end -%>
     <%- end -%>
-        <ac:structured-macro ac:name="expand" ac:schema-version="1">
-          <ac:parameter ac:name="title">Source</ac:parameter>
-          <ac:rich-text-body>
-            <ac:structured-macro ac:name="code" ac:schema-version="1">
-              <ac:parameter ac:name="language">ruby</ac:parameter>
-              <ac:parameter ac:name="title"><%= defined_type['file'] %></ac:parameter>
-              <ac:plain-text-body><![CDATA[<%= defined_type['source'] %>]]></ac:plain-text-body>
-            </ac:structured-macro>
-          </ac:rich-text-body>
+    <ac:structured-macro ac:name="expand" ac:schema-version="1">
+      <ac:parameter ac:name="title">Source</ac:parameter>
+      <ac:rich-text-body>
+        <ac:structured-macro ac:name="code" ac:schema-version="1">
+          <ac:parameter ac:name="language">ruby</ac:parameter>
+          <ac:parameter ac:name="title"><%= defined_type['file'] %></ac:parameter>
+          <ac:plain-text-body><![CDATA[<%= defined_type['source'] %>]]></ac:plain-text-body>
         </ac:structured-macro>
+      </ac:rich-text-body>
+    </ac:structured-macro>
   <%- end -%>
 <%- end -%>
-<%# Parse functions -%>
+<%#
+
+  Parse functions
+
+-%>
 <%- if @data['puppet_functions'].any? -%>
   <h1>Puppet functions</h1>
   <%- @data['puppet_functions'].each do |puppet_function| -%>
     <h2><%= puppet_function['name'] %></h2>
-    <h3>Description</h3>
     <p><%= puppet_function['docstring']['text'] %></p>
-    <%- for tag in puppet_function['docstring']['tags'] -%>
-      <%- if tag['tag_name'] == 'return' -%>
-        <strong>Return:</strong> [ <%= tag['types'].join(',') %> ] <%= tag['text'] %><br/>
-      <%- else -%>
+    <%-
+      tags = puppet_function['docstring']['tags']
+      examples = tags.select { |a| a['tag_name'].eql? 'example' }
+    -%>
+    <%- for tag in tags -%>
+      <%- if tag['tag_name'].eql? 'return' -%>
+        <strong>Returns:</strong> [ <%= tag['types'].join(',') %> ] <%= tag['text'] %><br/>
+      <%- elsif !%w(overload example).include? tag['tag_name'] -%>
         <strong><%= tag['tag_name'] %>:</strong> <%= tag['text'] %><br/>
       <%- end -%>
     <%- end -%>
-        <ac:structured-macro ac:name="expand" ac:schema-version="1">
-          <ac:parameter ac:name="title">Source</ac:parameter>
-          <ac:rich-text-body>
-            <ac:structured-macro ac:name="code" ac:schema-version="1">
-              <ac:parameter ac:name="language">ruby</ac:parameter>
-              <ac:parameter ac:name="title"><%= puppet_function['file'] %></ac:parameter>
-              <ac:plain-text-body><![CDATA[<%= puppet_function['source'] %>]]></ac:plain-text-body>
-            </ac:structured-macro>
-          </ac:rich-text-body>
+    <%- if examples.any? -%>
+      <h3>Examples</h3>
+      <%- for example in examples -%>
+        <p><%= example['name'] %></p>
+        <ac:structured-macro ac:name="code" ac:schema-version="1">
+          <ac:parameter ac:name="language">ruby</ac:parameter>
+          <ac:parameter ac:name="title"><%= example['name'] %></ac:parameter>
+          <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
         </ac:structured-macro>
+      <%- end -%>
+    <%- end -%>
+    <ac:structured-macro ac:name="expand" ac:schema-version="1">
+      <ac:parameter ac:name="title">Source</ac:parameter>
+      <ac:rich-text-body>
+        <ac:structured-macro ac:name="code" ac:schema-version="1">
+          <ac:parameter ac:name="language">ruby</ac:parameter>
+          <ac:parameter ac:name="title"><%= puppet_function['file'] %></ac:parameter>
+          <ac:plain-text-body><![CDATA[<%= puppet_function['source'] %>]]></ac:plain-text-body>
+        </ac:structured-macro>
+      </ac:rich-text-body>
+    </ac:structured-macro>
   <%- end -%>
 <%- end -%>
