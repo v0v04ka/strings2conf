@@ -36,7 +36,7 @@
     <%- end -%>
     <%- params = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
     <%- if params.any? -%>
-      <h3>Params</h3>
+      <h3>Parameters</h3>
       <ul>
         <%- for param in params -%>
           <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
@@ -92,7 +92,7 @@
     <%- end -%>
     <%- params = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
     <%- if params.any? -%>
-      <h3>Params</h3>
+      <h3>Parameters</h3>
       <ul>
         <%- for param in params -%>
           <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
@@ -134,18 +134,50 @@
     <%-
       tags = puppet_function['docstring']['tags']
       examples = tags.select { |a| a['tag_name'].eql? 'example' }
+      overloads = tags.select { |a| a['tag_name'].eql? 'overload' }
     -%>
-    <%- for tag in tags -%>
-      <%- if tag['tag_name'].eql? 'return' -%>
-        <strong>Returns:</strong> [ <%= tag['types'].join(',') %> ] <%= tag['text'] %><br/>
-      <%- elsif !%w(overload example).include? tag['tag_name'] -%>
-        <strong><%= tag['tag_name'] %>:</strong> <%= tag['text'] %><br/>
+    <%- if overloads.any? -%>
+      <%- overloads.each_with_index do |overload, index| -%>
+        <h3>Signature #<%= index + 1 %> </h3>
+         <ac:structured-macro ac:name="code" ac:schema-version="1">
+          <ac:parameter ac:name="language">ruby</ac:parameter>
+          <ac:plain-text-body><![CDATA[<%= overload['signature'] %>]]></ac:plain-text-body>
+        </ac:structured-macro>
+        <%- tags = overload['docstring']['tags'] -%>
+        <%- params = tags.select { |a| a['tag_name'].eql? 'param' } -%>
+        <%- returns = tags.select { |a| a['tag_name'].eql? 'return' } -%>
+        <%- if params.any? -%>
+          <h3>Parameters</h3>
+          <%- params.each do |param| -%>
+            <strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %><br/>
+          <%- end -%>
+        <%- end -%>
+        <%- if returns.any? -%>
+          <h3>Returns</h3>
+          <%- returns.each do |ret| -%>
+            <p>[ <%= ret['types'].join(',') %> ] <%= ret['text'] %></p>
+          <%- end -%>
+        <%- end -%>
+      <%- end -%>
+    <%- else -%>
+      <%- params = tags.select { |a| a['tag_name'].eql? 'param' } -%>
+      <%- returns = tags.select { |a| a['tag_name'].eql? 'return' } -%>
+      <%- if params.any? -%>
+        <h3>Parameters</h3>
+        <%- params.each do |param| -%>
+          <strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %><br/>
+        <%- end -%>
+      <%- end -%>
+      <%- if returns.any? -%>
+        <h3>Returns</h3>
+        <%- returns.each do |ret| -%>
+          <p>[ <%= ret['types'].join(',') %> ] <%= ret['text'] %></p>
+        <%- end -%>
       <%- end -%>
     <%- end -%>
     <%- if examples.any? -%>
       <h3>Examples</h3>
       <%- for example in examples -%>
-        <p><%= example['name'] %></p>
         <ac:structured-macro ac:name="code" ac:schema-version="1">
           <ac:parameter ac:name="language">ruby</ac:parameter>
           <ac:parameter ac:name="title"><%= example['name'] %></ac:parameter>
