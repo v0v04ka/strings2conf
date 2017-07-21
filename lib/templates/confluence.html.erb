@@ -18,6 +18,7 @@
   <h1>Puppet classes</h1>
   <%- @data['puppet_classes'].each do |puppet_class| -%>
     <h2><%= puppet_class['name'] %></h2>
+    <%- if puppet_class['docstring']['tags'] -%>
     <%- api = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
     <%- if api.any? and api[0]['text'].eql? 'private' -%>
       <ac:structured-macro ac:macro-id="a89793b9-e782-4567-95e6-58a6b34d9b9e" ac:name="note" ac:schema-version="1">
@@ -63,6 +64,7 @@
         </ac:structured-macro>
       </ac:rich-text-body>
     </ac:structured-macro>
+  <%- end -%>
   <%- end -%>
 <%- end -%>
 <%#
