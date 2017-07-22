@@ -46,24 +46,12 @@
       <%- end -%>
       <%- examples = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'example' } -%>
       <%- if examples.any? -%>
-        <h3>Examples</h3>
-        <%- for example in examples -%>
-          <p><%= example['name'] %></p>
-          <ac:structured-macro ac:name="code" ac:schema-version="1">
-            <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
-          </ac:structured-macro>
+        <%- examples.each do |example| -%>
+          <h3>Examples</h3>
+          <%= Strings2conf::Util::code_block(example['text'], title: example['name'], language: :ruby) -%>
         <%- end -%>
       <%- end -%>
-      <ac:structured-macro ac:name="expand" ac:schema-version="1">
-        <ac:parameter ac:name="title">Source</ac:parameter>
-        <ac:rich-text-body>
-          <ac:structured-macro ac:name="code" ac:schema-version="1">
-            <ac:parameter ac:name="language">ruby</ac:parameter>
-            <ac:parameter ac:name="title"><%= puppet_class['file'] %></ac:parameter>
-            <ac:plain-text-body><![CDATA[<%= puppet_class['source'] %>]]></ac:plain-text-body>
-          </ac:structured-macro>
-        </ac:rich-text-body>
-      </ac:structured-macro>
+      <%= Strings2conf::code_block(puppet_class['source'], title: puppet_class['file'], collapse: true, language: :ruby) -%>
     <%- end -%>
   <%- end -%>
 <%- end -%>
@@ -105,23 +93,11 @@
       <%- examples = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'example' } -%>
       <%- if examples.any? -%>
         <h3>Examples</h3>
-        <%- for example in examples -%>
-          <p><%= example['name'] %></p>
-          <ac:structured-macro ac:name="code" ac:schema-version="1">
-            <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
-          </ac:structured-macro>
+        <%- examples.each do |example| -%>
+          <%= Strings2conf::Util::code_block(example['text'], title: example['name'], language: :ruby) -%>
         <%- end -%>
       <%- end -%>
-      <ac:structured-macro ac:name="expand" ac:schema-version="1">
-        <ac:parameter ac:name="title">Source</ac:parameter>
-        <ac:rich-text-body>
-          <ac:structured-macro ac:name="code" ac:schema-version="1">
-            <ac:parameter ac:name="language">ruby</ac:parameter>
-            <ac:parameter ac:name="title"><%= defined_type['file'] %></ac:parameter>
-            <ac:plain-text-body><![CDATA[<%= defined_type['source'] %>]]></ac:plain-text-body>
-          </ac:structured-macro>
-        </ac:rich-text-body>
-      </ac:structured-macro>
+      <%= Strings2conf::code_block(defined_type['source'], title: defined_type['file'], collapse: true, language: :ruby) -%>
     <%- end -%>
   <%- end -%>
 <%- end -%>
@@ -143,10 +119,7 @@
     <%- if overloads.any? -%>
       <%- overloads.each_with_index do |overload, index| -%>
         <h3>Signature #<%= index + 1 %> </h3>
-        <ac:structured-macro ac:name="code" ac:schema-version="1">
-          <ac:parameter ac:name="language">ruby</ac:parameter>
-          <ac:plain-text-body><![CDATA[<%= overload['signature'] %>]]></ac:plain-text-body>
-        </ac:structured-macro>
+        <%= Strings2conf::Util::code_block(overload['signature'], language: :ruby, theme: 'Default') -%>
         <%- tags = overload['docstring']['tags'] -%>
         <%- params = tags.select { |a| a['tag_name'].eql? 'param' } -%>
         <%- returns = tags.select { |a| a['tag_name'].eql? 'return' } -%>
@@ -181,23 +154,10 @@
     <%- end -%>
     <%- if examples.any? -%>
       <h3>Examples</h3>
-      <%- for example in examples -%>
-        <ac:structured-macro ac:name="code" ac:schema-version="1">
-          <ac:parameter ac:name="language">ruby</ac:parameter>
-          <ac:parameter ac:name="title"><%= example['name'] %></ac:parameter>
-          <ac:plain-text-body><![CDATA[<%= example['text'] %>]]></ac:plain-text-body>
-        </ac:structured-macro>
+      <%- examples.each do |example| -%>
+        <%= Strings2conf::Util::code_block(example['text'], title: example['name'], language: :ruby) -%>
       <%- end -%>
     <%- end -%>
-    <ac:structured-macro ac:name="expand" ac:schema-version="1">
-      <ac:parameter ac:name="title">Source</ac:parameter>
-      <ac:rich-text-body>
-        <ac:structured-macro ac:name="code" ac:schema-version="1">
-          <ac:parameter ac:name="language">ruby</ac:parameter>
-          <ac:parameter ac:name="title"><%= puppet_function['file'] %></ac:parameter>
-          <ac:plain-text-body><![CDATA[<%= puppet_function['source'] %>]]></ac:plain-text-body>
-        </ac:structured-macro>
-      </ac:rich-text-body>
-    </ac:structured-macro>
+    <%= Strings2conf::Util::code_block(puppet_function['source'], title: puppet_function['file'], collapse: true, language: :ruby) -%>
   <%- end -%>
 <%- end -%>

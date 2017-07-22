@@ -6,3 +6,11 @@ Style/ClosingParenthesisIndentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+# I like Puppet hash behavior
+Style/TrailingCommaInLiteral:
+  Enabled: false
+
+# Not until RubyMine learns to indent these properly
+Style/MultilineMethodCallIndentation:
+  Enabled: false
