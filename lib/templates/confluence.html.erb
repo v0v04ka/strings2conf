@@ -22,6 +22,7 @@
   <%- @data['puppet_classes'].each do |puppet_class| -%>
     <h2><%= puppet_class['name'] %></h2>
     <%- if puppet_class['docstring']['tags'] -%>
+      <p><%= h(puppet_class['docstring']['text']).gsub("\n\n", "<br/>\n") %></p>
       <%- api = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
       <%- if api.any? and api[0]['text'].eql? 'private' -%>
         <ac:structured-macro ac:name="note" ac:schema-version="1">
@@ -30,12 +31,10 @@
           </ac:rich-text-body>
         </ac:structured-macro>
       <%- end -%>
-      <h3>Description</h3>
-      <p><%= puppet_class['docstring']['text'] %></p>
       <%- for tag in puppet_class['docstring']['tags'] -%>
         <%- unless %w(param example api).include? tag['tag_name'] -%>
           <h3><%= tag['tag_name'].capitalize %></h3>
-          <p><%= tag['name'] %> <%= h tag['text'] %> </p>
+          <p><%= h tag['name'] %> <%= h tag['text'] %></p>
         <%- end -%>
       <%- end -%>
       <%- params = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
@@ -54,7 +53,7 @@
           <%= Strings2conf::Util::code_block(example['text'], title: example['name'], language: :ruby) -%>
         <%- end -%>
       <%- end -%>
-      <%= Strings2conf::code_block(puppet_class['source'], title: puppet_class['file'], collapse: true, language: :ruby) -%>
+      <%= Strings2conf::Util::code_block(puppet_class['source'], title: puppet_class['file'], collapse: true, language: :ruby) -%>
     <%- end -%>
   <%- end -%>
 <%- end -%>
@@ -68,6 +67,7 @@
   <%- @data['defined_types'].each do |defined_type| -%>
     <h2><%= defined_type['name'] %></h2>
     <%- if defined_type['docstring']['tags'] -%>
+      <p><%= h(defined_type['docstring']['text']).gsub("\n\n", "<br/>\n") %></p>
       <%- api = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
       <%- if api.any? and api[0]['text'].eql? 'private' -%>
         <ac:structured-macro ac:name="note" ac:schema-version="1">
@@ -76,12 +76,10 @@
           </ac:rich-text-body>
         </ac:structured-macro>
       <%- end -%>
-      <h3>Description</h3>
-      <p><%= defined_type['docstring']['text'] %></p>
       <%- for tag in defined_type['docstring']['tags'] -%>
         <%- unless %w(param example api).include? tag['tag_name'] -%>
           <h3><%= tag['tag_name'].capitalize %></h3>
-          <p><%= tag['name'] %> <%= h tag['text'] %> </p>
+          <p><%= h tag['name'] %> <%= h tag['text'] %></p>
         <%- end -%>
       <%- end -%>
       <%- params = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'param' } -%>
@@ -100,7 +98,7 @@
           <%= Strings2conf::Util::code_block(example['text'], title: example['name'], language: :ruby) -%>
         <%- end -%>
       <%- end -%>
-      <%= Strings2conf::code_block(defined_type['source'], title: defined_type['file'], collapse: true, language: :ruby) -%>
+      <%= Strings2conf::Util::code_block(defined_type['source'], title: defined_type['file'], collapse: true, language: :ruby) -%>
     <%- end -%>
   <%- end -%>
 <%- end -%>
@@ -113,7 +111,7 @@
   <h1>Functions</h1>
   <%- @data['puppet_functions'].each do |puppet_function| -%>
     <h2><%= puppet_function['name'] %></h2>
-    <p><%= puppet_function['docstring']['text'] %></p>
+    <p><%= h(puppet_function['docstring']['text']).gsub("\n\n", "<br/>\n") %></p>
     <%-
       tags = puppet_function['docstring']['tags']
       examples = tags.select { |a| a['tag_name'].eql? 'example' }
