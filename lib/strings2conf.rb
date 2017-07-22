@@ -19,7 +19,7 @@ module Strings2conf
         .join("\n")
 
       <<~HTML
-        <ac:structured-macro ac:name="code" ac:schema-version="1">
+        <ac:structured-macro ac:name="code">
         #{ac_params}
           <ac:plain-text-body><![CDATA[#{code}]]></ac:plain-text-body>
         </ac:structured-macro>

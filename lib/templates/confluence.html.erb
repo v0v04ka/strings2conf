@@ -5,12 +5,6 @@
 -%>
 <ac:structured-macro ac:name="toc">
   <ac:parameter ac:name="maxLevel">2</ac:parameter>
-  <ac:parameter ac:name="minLevel">1</ac:parameter>
-  <ac:parameter ac:name="outline">false</ac:parameter>
-  <ac:parameter ac:name="style">disc</ac:parameter>
-  <ac:parameter ac:name="type">list</ac:parameter>
-  <ac:parameter ac:name="class">rm-contents</ac:parameter>
-  <ac:parameter ac:name="printable">true</ac:parameter>
 </ac:structured-macro>
 <%#
 
@@ -25,7 +19,7 @@
       <p><%= h(puppet_class['docstring']['text']).gsub("\n\n", "<br/>\n") %></p>
       <%- api = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
       <%- if api.any? and api[0]['text'].eql? 'private' -%>
-        <ac:structured-macro ac:name="note" ac:schema-version="1">
+        <ac:structured-macro ac:name="note">
           <ac:rich-text-body>
             <p>This class is private. It's intended solely for internal module usage.</p>
           </ac:rich-text-body>
@@ -70,7 +64,7 @@
       <p><%= h(defined_type['docstring']['text']).gsub("\n\n", "<br/>\n") %></p>
       <%- api = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
       <%- if api.any? and api[0]['text'].eql? 'private' -%>
-        <ac:structured-macro ac:name="note" ac:schema-version="1">
+        <ac:structured-macro ac:name="note">
           <ac:rich-text-body>
             <p>This defined type is private. It's intended solely for internal module usage.</p>
           </ac:rich-text-body>
