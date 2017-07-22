@@ -42,8 +42,8 @@
       <%- end -%>
       <%- examples = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'example' } -%>
       <%- if examples.any? -%>
+        <h3>Examples</h3>
         <%- examples.each do |example| -%>
-          <h3>Examples</h3>
           <%= Strings2conf::Util::code_block(example['text'], title: example['name'], language: :ruby) -%>
         <%- end -%>
       <%- end -%>
