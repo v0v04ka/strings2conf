@@ -1,13 +1,16 @@
+<%#
+
+  Table of Contents
+
+-%>
 <ac:structured-macro ac:name="toc">
-  <ac:parameter ac:name="printable">true</ac:parameter>
-  <ac:parameter ac:name="style">disc</ac:parameter>
   <ac:parameter ac:name="maxLevel">2</ac:parameter>
   <ac:parameter ac:name="minLevel">1</ac:parameter>
-  <ac:parameter ac:name="class">rm-contents</ac:parameter>
-  <ac:parameter ac:name="exclude"></ac:parameter>
-  <ac:parameter ac:name="type">list</ac:parameter>
   <ac:parameter ac:name="outline">false</ac:parameter>
-  <ac:parameter ac:name="include"></ac:parameter>
+  <ac:parameter ac:name="style">disc</ac:parameter>
+  <ac:parameter ac:name="type">list</ac:parameter>
+  <ac:parameter ac:name="class">rm-contents</ac:parameter>
+  <ac:parameter ac:name="printable">true</ac:parameter>
 </ac:structured-macro>
 <%#
 
@@ -15,13 +18,13 @@
 
 -%>
 <%- if @data['puppet_classes'].any? -%>
-  <h1>Puppet classes</h1>
+  <h1>Classes</h1>
   <%- @data['puppet_classes'].each do |puppet_class| -%>
     <h2><%= puppet_class['name'] %></h2>
     <%- if puppet_class['docstring']['tags'] -%>
       <%- api = puppet_class['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
       <%- if api.any? and api[0]['text'].eql? 'private' -%>
-        <ac:structured-macro ac:macro-id="a89793b9-e782-4567-95e6-58a6b34d9b9e" ac:name="note" ac:schema-version="1">
+        <ac:structured-macro ac:name="note" ac:schema-version="1">
           <ac:rich-text-body>
             <p>This class is private. It's intended solely for internal module usage.</p>
           </ac:rich-text-body>
@@ -67,7 +70,7 @@
     <%- if defined_type['docstring']['tags'] -%>
       <%- api = defined_type['docstring']['tags'].select { |a| a['tag_name'].eql? 'api' } -%>
       <%- if api.any? and api[0]['text'].eql? 'private' -%>
-        <ac:structured-macro ac:macro-id="a89793b9-e782-4567-95e6-58a6b34d9b9e" ac:name="note" ac:schema-version="1">
+        <ac:structured-macro ac:name="note" ac:schema-version="1">
           <ac:rich-text-body>
             <p>This defined type is private. It's intended solely for internal module usage.</p>
           </ac:rich-text-body>
@@ -107,7 +110,7 @@
 
 -%>
 <%- if @data['puppet_functions'].any? -%>
-  <h1>Puppet functions</h1>
+  <h1>Functions</h1>
   <%- @data['puppet_functions'].each do |puppet_function| -%>
     <h2><%= puppet_function['name'] %></h2>
     <p><%= puppet_function['docstring']['text'] %></p>
@@ -118,8 +121,8 @@
     -%>
     <%- if overloads.any? -%>
       <%- overloads.each_with_index do |overload, index| -%>
-        <h3>Signature #<%= index + 1 %> </h3>
-        <%= Strings2conf::Util::code_block(overload['signature'], language: :ruby, theme: 'Default') -%>
+        <h3>Signature #<%= index + 1 %></h3>
+        <%= Strings2conf::Util::code_block(overload['signature'], language: :ruby, theme: 'Default', linenumbers: false) -%>
         <%- tags = overload['docstring']['tags'] -%>
         <%- params = tags.select { |a| a['tag_name'].eql? 'param' } -%>
         <%- returns = tags.select { |a| a['tag_name'].eql? 'return' } -%>
