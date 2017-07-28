@@ -114,7 +114,7 @@
     <%- if overloads.any? -%>
       <%- overloads.each_with_index do |overload, index| -%>
         <h3>Signature #<%= index + 1 %></h3>
-        <%= Strings2conf::Util::code_block(overload['signature'], language: :ruby, theme: 'Default', linenumbers: false) -%>
+        <%= Strings2conf::Util::code_block(overload['signature'], language: :ruby, linenumbers: false) -%>
         <%- tags = overload['docstring']['tags'] -%>
         <%- params = tags.select { |a| a['tag_name'].eql? 'param' } -%>
         <%- returns = tags.select { |a| a['tag_name'].eql? 'return' } -%>
