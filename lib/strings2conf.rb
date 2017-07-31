@@ -25,6 +25,21 @@ module Strings2conf
         </ac:structured-macro>
       HTML
     end
+
+    def self.parse_param(instance, param)
+      name  = param['name']
+      types = param['types']
+        .map { |t| "<code>#{t}</code>" }
+        .join(',')
+      defaults = if instance['defaults'].key?(name)
+        "(defaults to: <code>#{instance['defaults'][name]}</code>) "
+      else
+        ''
+      end
+      <<~HTML
+        <li><strong><code>#{name}</code></strong> [ #{types} ] #{defaults}#{param['text']}</li>
+      HTML
+    end
   end
 
   def self.convert(json)

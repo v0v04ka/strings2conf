@@ -36,7 +36,7 @@
         <h3>Parameters</h3>
         <ul>
           <%- for param in params -%>
-            <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
+            <%= Strings2conf::Util::parse_param(puppet_class, param) %>
           <%- end -%>
         </ul>
       <%- end -%>
@@ -81,7 +81,7 @@
         <h3>Parameters</h3>
         <ul>
           <%- for param in params -%>
-            <li><strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %></li>
+            <%= Strings2conf::Util::parse_param(defined_type, param) %>
           <%- end -%>
         </ul>
       <%- end -%>
@@ -121,7 +121,7 @@
         <%- if params.any? -%>
           <h3>Parameters</h3>
           <%- params.each do |param| -%>
-            <strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %><br/>
+            <%= Strings2conf::Util::parse_param(overload, param) %>
           <%- end -%>
         <%- end -%>
         <%- if returns.any? -%>
@@ -137,7 +137,7 @@
       <%- if params.any? -%>
         <h3>Parameters</h3>
         <%- params.each do |param| -%>
-          <strong><%= param['name'] %></strong> [ <%= param['types'].join(',') %> ] <%= param['text'] %><br/>
+          <%= Strings2conf::Util::parse_param(puppet_function, param) %>
         <%- end -%>
       <%- end -%>
       <%- if returns.any? -%>
@@ -153,6 +153,6 @@
         <%= Strings2conf::Util::code_block(example['text'], title: example['name'], language: :ruby) -%>
       <%- end -%>
     <%- end -%>
-  <%= Strings2conf::Util::code_block(puppet_function['source'], title: puppet_function['file'], collapse: true, language: :ruby) -%>
+    <%= Strings2conf::Util::code_block(puppet_function['source'], title: puppet_function['file'], collapse: true, language: :ruby) -%>
   <%- end -%>
 <%- end -%>
