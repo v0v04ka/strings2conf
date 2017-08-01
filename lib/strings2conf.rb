@@ -31,7 +31,7 @@ module Strings2conf
       types = param['types']
         .map { |t| "<code>#{t}</code>" }
         .join(',')
-      defaults = if instance['defaults'].key?(name)
+      defaults = if instance.key?('defaults') and instance['defaults'].key?(name)
         "(defaults to: <code>#{instance['defaults'][name]}</code>) "
       else
         ''
