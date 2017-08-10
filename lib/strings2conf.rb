@@ -27,17 +27,19 @@ module Strings2conf
     end
 
     def self.parse_param(instance, param)
-      name  = param['name']
-      types = param['types']
-        .map { |t| "<code>#{t}</code>" }
-        .join(',')
+      name     = param['name']
+      types    = if param['types']
+        " [ #{param['types'].map { |t| "<code>#{t}</code>" }.join(',')} ] "
+      else
+        ''
+      end
       defaults = if instance.key?('defaults') and instance['defaults'].key?(name)
-        "(defaults to: <code>#{instance['defaults'][name]}</code>) "
+        " (defaults to: <code>#{h instance['defaults'][name]}</code>) "
       else
         ''
       end
       <<~HTML
-        <li><strong><code>#{name}</code></strong> [ #{types} ] #{defaults}#{param['text']}</li>
+        <li><strong><code>#{name}</code></strong>#{types}#{defaults}#{h param['text']}</li>
       HTML
     end
   end
